@@ -147,23 +147,23 @@ This guide provides a uniform way to structure your [Vue.js](http://vuejs.org/) 
 [↑ наверх к содержанию](#table-of-contents)
 
 
-## Keep component props primitive
+## Сохраняйте входные данные компонента примитивными
 
-While Vue.js supports passing complex JavaScript objects via these attributes, you should try to **keep the component props as primitive as possible**. Try to only use [JavaScript primitives](https://developer.mozilla.org/en-US/docs/Glossary/Primitive) (strings, numbers, booleans) and functions. Avoid complex objects.
+Хотя Vue.js поддерживает передачу сложных объектов JavaScript через эти атрибуты, вы должны стараться **сохранять входные данные компонента настолько примитивными, насколько это возможно**. Попробуйте использовать только [JavaScript-примитивы](https://developer.mozilla.org/en-US/docs/Glossary/Primitive) (строки, числа, булевые значения) и функции. Избегайте сложных объектов.
 
 ### Почему?
 
-* By using an attribute for each prop separately the component has a clear and expressive API;
-* By using only primitives and functions as props values our component APIs are similar to the APIs of native HTML(5) elements;
-* By using an attribute for each prop, other developers can easily understand what is passed to the component instance;
-* When passing complex objects it's not apparent which properties and methods of the objects are actually being used by the custom components. This makes it hard to refactor code and can lead to code rot.
+* Используя отдельные атрибуты для каждого входного параметра, компонент получает чистый и выразительный API;
+* Используя только примитивы и функции в качестве значений входных данных, API нашего компонента становится похожим на API нативных элементов HTML(5);
+* Используя отдельные атрибуты для каждого входного параметра, другие разработчики могут с лёгкостью определять что передаётся в экземпляр компонента;
+* При передаче сложных объектов неясно, какие свойства и методы объекта фактически используются компонентом. Это затрудняет рефакторинг и может привести к «гниению» кода.
 
 ### Каким образом?
 
-Use a component attribute per props, with a primitive or function as value:
+Используйте атрибут компонента для каждого входного параметра, с примитивом или функцией в качестве значения:
 
 ```html
-<!-- recommended -->
+<!-- рекомендуется -->
 <range-slider
   :values="[10, 20]"
   min="0"
@@ -173,7 +173,7 @@ Use a component attribute per props, with a primitive or function as value:
   :on-end="updateResults">
 </range-slider>
 
-<!-- avoid -->
+<!-- следует избегать -->
 <range-slider :config="complexConfigObject"></range-slider>
 ```
 
@@ -182,9 +182,9 @@ Use a component attribute per props, with a primitive or function as value:
 
 ## Harness your component props
 
-In Vue.js your component props are your API. A robust and predictable API makes your components easy to use by other developers.
+В Vue.js входные данные вашего компонента и есть ваше API. Ясное и предсказуемое API упрощает использование ваших компонентов другими разработчиками.
 
-Component props are passed via custom HTML attributes. The values of these attributes can be Vue.js plain strings (`:attr="value"` or `v-bind:attr="value"`) or missing entirely. You should **harness your component props** to allow for these different cases.
+Входные данные компонента передаются через пользовательские HTML-атрибуты. Значением этих атрибутов могут быть простые строки (`:attr="value"` или `v-bind:attr="value"`) или полностью отсутствовать. You should **harness your component props** to allow for these different cases.
 
 ### Почему?
 
