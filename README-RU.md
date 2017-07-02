@@ -26,7 +26,7 @@ This guide provides a uniform way to structure your [Vue.js](http://vuejs.org/) 
 
 * [Разработка на основе модулей](#разработка-на-основе-модулей)
 * [Именование компонентов Vue](#именование-компонентов-vue)
-* [Keep component expressions simple](#keep-component-expressions-simple)
+* [Сохраняйте выражения в компонентах простыми](#сохраняйте-выражения-в-компонентах-простыми)
 * [Keep component props primitive](#keep-component-props-primitive)
 * [Harness your component props](#harness-your-component-props)
 * [Assign `this` to `component`](#assign-this-to-component)
@@ -97,22 +97,22 @@ This guide provides a uniform way to structure your [Vue.js](http://vuejs.org/) 
 [↑ наверх к содержанию](#table-of-contents)
 
 
-## Keep component expressions simple
+## Сохраняйте выражения в компонентах простыми
 
-Vue.js's inline expressions are 100% Javascript. This makes them extremely powerful, but potentially also very complex. Therefore you should **keep expressions simple**.
+Инлайновые выражения Vue.js на 100% Javascript. Это делает из чрезвычайно мощными, но потенциально и очень сложными. Поэтому вы должны **сохранять выражения простыми**.
 
 ### Почему?
 
-* Complex inline expressions are hard to read.
-* Inline expressions can't be reused elsewhere. This can lead to code duplication and code rot.
-* IDEs typically don't have support for expression syntax, so your IDE can't autocomplete or validate.
+* Сложные инлайновые выражения трудно читать.
+* Инлайновые выражения нельзя переиспользовать в другом месте. Это может привести к дублированию кода и «гниению» кода.
+* IDE обычно не поддерживают синтаксис выражений, поэтому ваша IDE не сможет предоставить автодополнение или валидацию.
 
 ### Каким образом?
 
-If it gets too complex or hard to read **move it to methods or computed properties**!
+Если становится слишком комплексным или трудночитаемым — **переместите его в методы или в вычисляемые свойства**!
 
 ```html
-<!-- recommended -->
+<!-- рекомендуется -->
 <template>
   <h1>
     {{ `${year}-${month}` }}
@@ -136,7 +136,7 @@ If it gets too complex or hard to read **move it to methods or computed properti
   };
 </script>
 
-<!-- avoid -->
+<!-- следует избегать -->
 <template>
   <h1>
     {{ `${(new Date()).getUTCFullYear()}-${('0' + ((new Date()).getUTCMonth()+1)).slice(-2)}` }}
