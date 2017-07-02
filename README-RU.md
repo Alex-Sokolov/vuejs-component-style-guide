@@ -1,108 +1,118 @@
+# Vue.js Component Style Guide
+
 <p align="center">
   <img src="https://raw.githubusercontent.com/pablohpsilva/vuejs-component-style-guide/master/img/logo.png"/>
 </p>
 
-### Переводы
- * [бразильский португальский](https://pablohpsilva.github.io/vuejs-component-style-guide/#/portuguese)
- * [английский](https://pablohpsilva.github.io/vuejs-component-style-guide/#)
- * [Японский](https://pablohpsilva.github.io/vuejs-component-style-guide/#/japanese)
- * [корейский язык](https://pablohpsilva.github.io/vuejs-component-style-guide/#/korean)
- * [китайский язык](https://pablohpsilva.github.io/vuejs-component-style-guide/#/chinese)
+### Translations
+* [Brazilian Portuguese](https://pablohpsilva.github.io/vuejs-component-style-guide/#/portuguese)
+* [Chinese](https://pablohpsilva.github.io/vuejs-component-style-guide/#/chinese)
+* [Japanese](https://pablohpsilva.github.io/vuejs-component-style-guide/#/japanese)
+* [Korean](https://pablohpsilva.github.io/vuejs-component-style-guide/#/korean)
+* [Russian](https://pablohpsilva.github.io/vuejs-component-style-guide/#/russian)
 
-Этот документ предлагает для вас ряд правил по разработке компонентов Vue которые:
+## Purpose
 
- * потом будет легче для вашей команды (или для вас в будущем) понять или найти что и как работает
- * ваш редактор кода (IDE, среда разработки) поймет с меньшим количеством ошибок и предложит лучшие подсказки
- * улучшит переиспользование в данном проекте и в других ваших проектах
- * лучше кешируются и выделяются в отдельные компоненты
+This guide provides a uniform way to structure your [Vue.js](http://vuejs.org/) code. Making it:
 
-##  Содержание
+* easier for developers/team members to understand and find things.
+* easier for IDEs to interpret the code and provide assistance.
+* easier to (re)use build tools you already use.
+* easier to cache and serve bundles of code separately.
 
-* Модульная разработка
-* Наименование компонентов Vue
-* Выражения в компонентах должны быть простыми
-* Оставляйте свойства простыми
-* Правильно используйте свойства компонента
-* Определяйте `this` как `component`
-* Структура компонента
-* Именование событий
-* Избегайте `this.$parent`
-* Используйте `this.$refs` осторожно
-* Используйте ограниченные стили
-* Документируйте API компонента
-* Добавляйте демо
-* Форматируйте код файлов
+This guide is inspired by the [RiotJS Style Guide](https://github.com/voorhoede/riotjs-style-guide) by [De Voorhoede](https://github.com/voorhoede).
 
+## Table of Contents
 
-## Модульная разработка
-
- Всегда старайтесь чтобы ваше приложение состояло из небольших модулей, каждый из которых умеет выполнять только одну функцию, но делает это хорошо.
-
- Модуль по определению это небольшая ограниченная часть приложения. "Строительный блок", самодостаточный функционально. Организация Vue позволяет создавать подобные модули ориентируясь на визуальные компоненты.
-
-### Почему?
-
-Модули небольших размеров легче взять для использования - понять что они делают, дорабатывать или переиспользовать. И вам и всей вашей команде.
-
-### Как?
-
-Старайтесь чтобы каждый Vue компонент соответствовал принципам [FIRST](https://addyosmani.com/first/):
- - решающий одну задачу,
- - независимый,
- - переиспользуемый,
- - небольшой,
- - простой в тестировании.
-
- [↑ наверх](#Содержание)
+* [Module based development](#module-based-development)
+* [vue component names](#vue-component-names)
+* [Keep component expressions simple](#keep-component-expressions-simple)
+* [Keep component props primitive](#keep-component-props-primitive)
+* [Harness your component props](#harness-your-component-props)
+* [Assign `this` to `component`](#assign-this-to-component)
+* [Component structure](#component-structure)
+* [Component event names](#component-event-names)
+* [Avoid `this.$parent`](#avoid-thisparent)
+* [Use `this.$refs` with caution](#use-thisrefs-with-caution)
+* [Use component name as style scope](#use-component-name-as-style-scope)
+* [Document your component API](#document-your-component-api)
+* [Add a component demo](#add-a-component-demo)
+* [Lint your component files](#lint-your-component-files)
+* [Create components when needed](#create-components-when-needed)
+<!-- * [Use `*.vue` extension](#use-vue-extension) -->
+<!-- * [Add badge to your project](#add-badge-to-your-project) -->
 
 
+## Module based development
 
-## Наименование компонентов Vue
+Always construct your app out of small modules which do one thing and do it well.
 
-Имя каждого компонента должно соответствовать следующим критериям:
+A module is a small self-contained part of an application. The Vue.js library is specifically designed to help you create *view-logic modules*.
 
-* **Понятное**: в меру детальным, в меру абстрактным
-* **Короткое**: не более 2-3 слов
-* **Произносимое**: чтобы его можно было упомянуть в обсуждении
+### Why?
 
-### Почему?
+Small modules are easier to learn, understand, maintain, reuse and debug. Both by you and other developers.
 
-* Имя компонента используется людьми и должно облегчать коммуникацию
+### How?
 
-### Как?
+Each Vue component (like any module) must be [FIRST](https://addyosmani.com/first/): *Focused* ([single responsibility](http://en.wikipedia.org/wiki/Single_responsibility_principle)), *Independent*, *Reusable*, *Small* and *Testable*.
+
+If your component does too much or gets too big, split it up into smaller components which each do just one thing. As a rule of thumb, try to keep each component file less than 100 lines of code.
+Also ensure your Vue component works in isolation. For instance by adding a stand-alone demo.
+
+[↑ back to Table of Contents](#table-of-contents)
+
+
+## Vue Component Names
+
+Each component name must be:
+
+* **Meaningful**: not over specific, not overly abstract.
+* **Short**: 2 or 3 words.
+* **Pronounceable**: we want to be able talk about them.
+
+Vue component names must also be:
+
+* **Custom element spec compliant**: [include a hyphen](https://www.w3.org/TR/custom-elements/#concepts), don't use reserved names.
+* **`app-` namespaced**: if very generic and otherwise 1 word, so that it can easily be reused in other projects.
+
+### Why?
+
+* The name is used to communicate about the component. So it must be short, meaningful and pronounceable.
+
+### How?
 
 ```html
-<!-- правильно -->
+<!-- recommended -->
 <app-header></app-header>
 <user-list></user-list>
 <range-slider></range-slider>
 
-<!-- неправильно -->
-<btn-group></btn-group> <!-- короткое, но произносить - язык сломаешь -->
-<ui-slider></ui-slider> <!-- все компоненты - так или иначе UI элементы, приставка не нужна -->
-<slider></slider> <!--не соответствует спецификации HTML5 -->
+<!-- avoid -->
+<btn-group></btn-group> <!-- short, but unpronounceable. use `button-group` instead -->
+<ui-slider></ui-slider> <!-- all components are ui elements, so is meaningless -->
+<slider></slider> <!-- not custom element spec compliant -->
 ```
 
-[↑ наверх](#Содержание)
+[↑ back to Table of Contents](#table-of-contents)
 
 
+## Keep component expressions simple
 
-## Выражения в компонентах должны быть простыми
+Vue.js's inline expressions are 100% Javascript. This makes them extremely powerful, but potentially also very complex. Therefore you should **keep expressions simple**.
 
-Вы можете использовать инлайн-выражения в шаблонах Vue - это самые обычные Javascript выражения. Они дают максимальную свободу и мощность, однако из-за этого они могут стать слишком сложными. Не злоупотребляйте этим - **оставляйте инлайн-выражения простыми**.
+### Why?
 
-### Почему?
+* Complex inline expressions are hard to read.
+* Inline expressions can't be reused elsewhere. This can lead to code duplication and code rot.
+* IDEs typically don't have support for expression syntax, so your IDE can't autocomplete or validate.
 
- * Сложные выражения сложнее прочесть и понять.
- * Инлайн-выражения нельзя переиспользовать, это очевидно, ведет дублированию кода и ухудшению его качества.
- * Редакторы и IDE обычно не могут парсить такие выражения, а значит у вас не будет автодополнения и валидации.
+### How?
 
-### Как?
-
-Простое правило - если код Javascript инлайн-выражения становится слишком сложным - **выносите его как отдельный метод в блок methods или computed-свойство, соответственно в блок computed**.
+If it gets too complex or hard to read **move it to methods or computed properties**!
 
 ```html
-<!-- правильно -->
+<!-- recommended -->
 <template>
   <h1>
     {{ `${year}-${month}` }}
@@ -126,7 +136,7 @@
   };
 </script>
 
-<!-- неправильно -->
+<!-- avoid -->
 <template>
   <h1>
     {{ `${(new Date()).getUTCFullYear()}-${('0' + ((new Date()).getUTCMonth()+1)).slice(-2)}` }}
@@ -134,25 +144,26 @@
 </template>
 ```
 
-[↑ наверх](#Содержание)
+[↑ back to Table of Contents](#table-of-contents)
 
-## Оставляйте свойства простыми
 
-Хотя Vue и поддерживает передачу атрибутов в виде сложных объектов, старайтесь избегать этого. Старайтесь ограничиться [простыми типами JavaScript](https://developer.mozilla.org/en-US/docs/Glossary/Primitive) и функциями для этого. Не передавайте сложные объекты в компоненты-наследники.
+## Keep component props primitive
 
-### Почему?
+While Vue.js supports passing complex JavaScript objects via these attributes, you should try to **keep the component props as primitive as possible**. Try to only use [JavaScript primitives](https://developer.mozilla.org/en-US/docs/Glossary/Primitive) (strings, numbers, booleans) and functions. Avoid complex objects.
 
-* Используя для каждого свойства отдельный атрибут - API вашего компонента будет более наглядным.
-* Такой подход совместим с API к которому мы все привыкли у нативных HTML(5) элементов.
-* Созданые вами атрибуты будет легче понять другим членам команды.
-* При передаче сложных объектов сразу не видно, какие из его свойств далее используются, - это затруднит рефакторинг.
+### Why?
 
-### Как?
+* By using an attribute for each prop separately the component has a clear and expressive API;
+* By using only primitives and functions as props values our component APIs are similar to the APIs of native HTML(5) elements;
+* By using an attribute for each prop, other developers can easily understand what is passed to the component instance;
+* When passing complex objects it's not apparent which properties and methods of the objects are actually being used by the custom components. This makes it hard to refactor code and can lead to code rot.
 
-Используйте отдельные атрибуты для каждой опции и передавайте в нее примитив (флаг, строку, число) или функцию.
+### How?
+
+Use a component attribute per props, with a primitive or function as value:
 
 ```html
-<!-- правильно -->
+<!-- recommended -->
 <range-slider
   :values="[10, 20]"
   min="0"
@@ -162,27 +173,28 @@
   :on-end="updateResults">
 </range-slider>
 
-<!-- неправильно -->
+<!-- avoid -->
 <range-slider :config="complexConfigObject"></range-slider>
 ```
 
-[↑ наверх](#Содержание)
+[↑ back to Table of Contents](#table-of-contents)
 
-## Ограничивайте используйте свойства компонента
 
-В Vue свойства компонента (`props`) являются отражением его API. Ясное и понятное API делает ваши компоненты более простыми для использования другими разработчиками.
+## Harness your component props
 
-Свойства передаются с использованием специальных атрибутов тега. Эти атрибуты могут быть либо указаны как пустые значения (`:attr`), либо присвоены строкам (`:attr="value"` или `v-bind:attr="value"`). Обратите внимание на подобные возможности при описании свойств.
+In Vue.js your component props are your API. A robust and predictable API makes your components easy to use by other developers.
 
-### Почему?
+Component props are passed via custom HTML attributes. The values of these attributes can be Vue.js plain strings (`:attr="value"` or `v-bind:attr="value"`) or missing entirely. You should **harness your component props** to allow for these different cases.
 
-Грамотное использование свойств гарантирует, что компонент всегда будет отрабатывать без ошибок. Даже если в последствии ваши компоненты будут использоваться не так как вы предполагали изначально.
+### Why?
 
-### Как?
+Harnessing your component props ensures your component will always function (defensive programming). Even when other developers later use your components in ways you haven't thought of yet.
 
-* Используйте свойства по умолчанию для указания значений свойств.
-* Используйте свойство `type` для [валидации](http://vuejs.org/v2/guide/components.html#Prop-Validation) значений свойства.
-* Всегда проверяйте что свойство определено прежде чем его использовать.
+### How?
+
+* Use defaults for props values.
+* Use `type` option to [validate](http://vuejs.org/v2/guide/components.html#Prop-Validation) values to an expected type.**[1\*]**
+* Check if props exists before using it.
 
 ```html
 <template>
@@ -192,7 +204,7 @@
   export default {
     props: {
       max: {
-        type: Number, // это обеспечивает проверку, что свойство max будет типа Number
+        type: Number, // [1*] This will validate the 'max' prop to be a Number.
         default() { return 10; },
       },
       min: {
@@ -208,21 +220,23 @@
 </script>
 ```
 
-[↑ наверх](#Содержание)
+[↑ back to Table of Contents](#table-of-contents)
 
 
-## Определяйте `this` как `component`
+## Assign `this` to `component`
 
-В контексте кода компонента Vue `this` всегда означает экземпляр самого компонента. Таким образом если вам понадобится обратиться к ней в другом контексте сделайте так, чтобы `this` означало  `component`.
+Within the context of a Vue.js component element, `this` is bound to the component instance.
+Therefore when you need to reference it in a different context, ensure `this` is available as `component`.
 
-То есть, **не используйте** устаревшие конструкции присваивания вроде `const self = this;`. Можно и нужно использовать `component` в Vue компонентах для этого.
+In other words: Do **NOT** code things like `var self = this;` anymore if you're using **ES6**. You're safe using Vue components.
 
-### Почему?
+### Why?
 
-* Присваивая `this` к переменной названной `component` напрямую укажет тем кто это будет использовать, что это означает сам компонент.
+* Using ES6, there's no need to save `this` to a variable;
+* In general, when using arrow functions the lexical scope is kept
+* If you're **NOT** using ES6 and, therefore, not using `Arrow Functions`, you'd have to add `this` to a variable. That's the only exception.
 
-### Как?
-
+### How?
 
 ```html
 <script type="text/javascript">
@@ -233,12 +247,12 @@ export default {
     },
     printHello() {
       console.log(this.hello());
-    }
-  }
+    },
+  },
 };
 </script>
 
-<!-- неправильно -->
+<!-- avoid -->
 <script type="text/javascript">
 export default {
   methods: {
@@ -246,33 +260,33 @@ export default {
       return 'hello';
     },
     printHello() {
-      const self = this; // не нужно
+      const self = this; // unnecessary
       console.log(self.hello());
     },
   },
 };
 </script>
 ```
-[↑ наверх](#Содержание)
+
+[↑ back to Table of Contents](#table-of-contents)
 
 
+## Component structure
 
-## Структура компонента
+Make it easy to reason and follow a sequence of thoughts. See the How.
 
-Добейтесь, чтобы описание компонента было понятным и логичным.
+### Why?
 
-### Почему?
+* Having the component export a clear and grouped object, makes the code easy to read and easier for developers to have a code standard.
+* Alphabetizing the properties, data, computed, watches, and methods makes them easy to find.
+* Again, grouping makes the component easier to read (name; extends; props, data and computed; components; watch and methods; lifecycle methods, etc.);
+* Use the `name` attribute. Using [vue devtools](https://chrome.google.com/webstore/detail/vuejs-devtools/nhdogjmejiglipccpnnnanhbledajbpd?hl=en) and that attribute will make your development/testing easier;
+* Use a CSS naming Methodology, like [BEM](https://medium.com/tldr-tech/bem-blocks-elements-and-modifiers-6b3b0af9e3ea#.bhnomd7gw), or [rscss](https://github.com/rstacruz/rscss) - [details?](#use-component-name-as-style-scope);
+* Use the template-script-style .vue file organization, as recomended by Evan You, Vue.js creator.
 
-* Экспортируемый объект (речь о `.js` файле или блоке `<script>` в `.vue` файле) компонента, построенный в каждом случае по одинаковым принципам, ускорит работу с ним других разработчиков и будет служить внутренним стандартом.
-* Если свойства будут расположены по алфавиту их будет легче просмотреть и найти нужное.
-* Группировка сходных свойств также облегчает чтение и ориентирование в коде, например props, data, computed; далее watch, и methods; далее lifecycle methods, и тд.
-* Используйте имя компонента `name`. Далее разработка с использованием [vue devtools](https://chrome.google.com/webstore/detail/vuejs-devtools/nhdogjmejiglipccpnnnanhbledajbpd?hl=en) будет более удобной с именованными компонентами.
-* Используйте одну из отраслевых технологий для именования CSS элементов, например [BEM](https://medium.com/tldr-tech/bem-blocks-elements-and-modifiers-6b3b0af9e3ea#.bhnomd7gw).
-* Предпочтительный порядок расположения блоков в `.vue` файле: template, потом script и далее style. Потому что большую часть времени любой разработчик проводит в написании HTML и далее JavaScript.
+### How?
 
-### Как?
-
-Структура компонента, описание свойств в логичном порядке:
+Component structure:
 
 ```html
 <template lang="html">
@@ -283,24 +297,25 @@ export default {
 
 <script type="text/javascript">
   export default {
-    // обязательно не забываем имя к.
+    // Do not forget this little guy
     name: 'RangeSlider',
-    // можем использовать композицию уже существующих к.
+    // compose new components
     extends: {},
-    // перечисление свойств и переменных
+    // component properties/variables
     props: {
-  bar: {}, // еще лучше если по-алфавиту
-  foo: {},
-  fooBar: {},
-  },
+      bar: {}, // Alphabetized
+      foo: {},
+      fooBar: {},
+    },
+    // variables
     data() {},
     computed: {},
-    // когда внутри используются другие к.
+    // when component uses other components
     components: {},
-    // методы
+    // methods
     watch: {},
     methods: {},
-    // методы жизненного цикла к.
+    // component Lifecycle hooks
     beforeCreate() {},
     mounted() {},
 };
@@ -311,70 +326,64 @@ export default {
 </style>
 ```
 
-[↑ наверх](#Содержание)
+[↑ back to Table of Contents](#table-of-contents)
 
+## Component event names
 
+Vue.js provides all Vue handler functions and expressions are strictly bound to the ViewModel. Each component events should follow a good naming style that will avoid issues during the development. See the **Why** below.
 
-## Именование событий
+### Why?
 
-В Vue все инлайн-выражения и методы компонента напрямую относятся к VM (ViewModel) и меняют ее состояние. При декларации собственных событий важно их грамотно называть, чтобы избежать сложности при дальнейшей разработке и использовании компонента.
+* Developers are free to use native likes event names and it can cause confusion down the line;
+* The freedom of naming events can lead to a [DOM templates incompatibility](https://vuejs.org/v2/guide/components.html#DOM-Template-Parsing-Caveats);
 
-### Почему?
+### How?
 
-* Разработчики могут использовать совпадающие имена, что может вызвать проблемы.
-* Полная свобода в выборе имён событий может также привести к проблемам с обработкой шаблонов.
+* Event names should be kebab-cased;
+* A unique event name should be fired for unique actions in your component that will be of interest to the outside world, like: upload-success, upload-error or even dropzone-upload-success, dropzone-upload-error (if you see the need for having a scoped prefix);
+* Events should either end in verbs in the infinitive form (e.g. client-api-load) or nouns (e.g drive-upload-success) ([source](https://github.com/GoogleWebComponents/style-guide#events));
 
-### Как?
+[↑ back to Table of Contents](#table-of-contents)
 
-* В названиях событий стоит использовать кебаб нотацию `kebab-cased`.
-* Название компонента должно быть уникальным и отражать что в нем происходит, например: `upload-success`, `upload-error` или `dropzone-upload-success`, `dropzone-upload-error`
-* В именах компонентов лучше использовать только существительные и глаголы, например: `client-api-load`, `drive-upload-success` ([источник](https://github.com/GoogleWebComponents/style-guide#events))
+## Avoid `this.$parent`
 
-[↑ наверх](#Содержание)
+Vue.js supports nested components which have access to their parent context. Accessing context outside your vue component violates the [FIRST](https://addyosmani.com/first/) rule of [component based development](#module-based-development). Therefore you should **avoid using `this.$parent`**.
 
+### Why?
 
+* A vue component, like any component, must work in isolation. If a component needs to access its parent, this rule is broken.
+* If a component needs access to its parent, it can no longer be reused in a different context.
 
-## Избегайте использования `this.$parent`
+### How?
 
-Vue поддерживает вложенности компонентов, поэтому дочерние компоненты могут обращаться к данным родителя.
-Обращение к внутреннему состоянию компонента снаружи нарушает принцип [FIRST](https://addyosmani.com/first/). Старайтесь избегать конструкции `this.$parent`. Возможны случаи, когда это разумный выход, но это слишком плохая практика, чтобы использовать его всегда.
+* Pass values from the parent to the child component using attribute/properties.
+* Pass methods defined on the parent component to the child component using callbacks in attribute expressions.
+* Emit events from child components and catch it on parent component.
 
-### Почему?
+[↑ back to Table of Contents](#table-of-contents)
 
-* Компонент Vue, как и любой другой, должен работать изолированно. Если для работы требуется взаимодействия с соседними скоупами, то нарушается принцип компонентной разработки.
-* Если компоненту требуется обращение к соседям - такой компонент не может быть полноценно переиспользован.
+## Use `this.$refs` with caution
 
+Vue.js supports components to have access to other components and basic HTML elements context via `ref` attribute. That attribute will provide an accessible way through `this.$refs` to a component or DOM element context. In most cases, the need to access **other components** context via `this.$refs` could be avoided. This is why you should be careful when using it to avoid wrong component APIs.
 
-### Как?
+### Why?
 
-* Передавайте данные из родителя в дочерний компонент используя атрибуты и свойства.
-* Передавайте методы используя коллбеки и выражениях в атрибутах.
-* В обратную сторону: дочерние компоненты должны генерировать события, которые будет перехватывать родитель.
+* A vue component, like any component, **must work in isolation**. If a component does not support all the access needed, it was badly designed/implemented.
+* Properties and events should be sufficient to most of your components.
 
-[↑ наверх](#Содержание)
+### How?
 
-
-## Используйте `this.$refs` осторожно
-
-Vue как и React поддерживает обращение к другим компонентам и html-элементам с использованием атрибута `ref`.
-Через обращение к `this.$refs` разработчик может получить доступ к контексту других компонентов или тегов. В большинстве случаев можно не использовать `this.$refs` для обращения к другим компонентам.
-
-### Почему?
-
-* Если компонент не работает в изоляции это признак плохого дизайна.
-* Для подавляющего большинства случаев, достаточно использовать свойства компонента и его события.
-
-### Как?
-
-* Серьезно относитесь к дизайну API ваших компонентов.
-* Старайтесь избегать умножений и ветвлений пути исполнения кода в компонентах. Наличие таких фрагментов является признаком того, что API не достаточно общее, либо вам нужно создать и использовать другие компоненты для других юзкейсов.
-* Используя компонент, обратите внимание на свойства: если какого-то из них не хватает, то добавьте их сами и/или создайте тикет, если это osc библиотека.
-* Тоже самое с событиями - если чего-то не хватает, значит другой разработчик (или вы сами, в прошлом) не добавил их. Для исправления добавьте отсутствующее или проверьте бизнес-логику компонента, возможно, это событие уже не используется, тогда его можно просто удалить.
-* Используйте `this.$refs`, только если других путей нет и вам никак не обойтись событиями и свойствами.
-* Если по-другому никак, то отдавайте предпочтение `refs`, а не jQuery или `document.queryElement`. Так вы останетесь на одном уровне абстракции (который даёт Vue) и не будете мешать их в трудно понимаемую кучу.
+* Create a good component API.
+* Always focus on the component purpose out of the box.
+* Never write specific code. If you need to write specific code inside a generic component, it means its API isn't generic enough or maybe you need a new component to manage other cases.
+* Check all the props to see if something is missing. If it is, create an issue or enhance the component yourself.
+* Check all the events. In most cases developers forget that Child-Parent communication (events) is needed, that's why they only remember the Parent-Child communication (using props).
+* **Props down, events up!** Upgrade your component when requested with a good API and isolation as goals.
+* Using `this.$refs` on components should be used when props and events are exhausted and having it makes sense (see the example below).
+* Using `this.$refs` to access DOM elements (instead of doing `jQuery`, `document.getElement*`, `document.queryElement`) is just fine, when the element can't be manipulated with data bindings or for a directive.
 
 ```html
-<!-- отлично, можно обойтись без ref -->
+<!-- good, no need for ref -->
 <range :max="max"
   :min="min"
   @current-value="currentValue"
@@ -382,10 +391,10 @@ Vue как и React поддерживает обращение к другим 
 ```
 
 ```html
-<!-- тут придется использовать this.$refs -->
+<!-- good example of when to use this.$refs -->
 <modal ref="basicModal">
   <h4>Basic Modal</h4>
-  <button class="primary" @click="$refs.basicModal.close()">Close</button>
+  <button class="primary" @click="$refs.basicModal.hide()">Close</button>
 </modal>
 <button @click="$refs.basicModal.open()">Open modal</button>
 
@@ -419,7 +428,7 @@ Vue как и React поддерживает обращение к другим 
 ```
 
 ```html
-<!-- тут можно было обойтись событиями -->
+<!-- avoid accessing something that could be emitted -->
 <template>
   <range :max="max"
     :min="min"
@@ -439,54 +448,55 @@ Vue как и React поддерживает обращение к другим 
   };
 </script>
 ```
-[↑ наверх](#Содержание)
+
+[↑ back to Table of Contents](#table-of-contents)
 
 
+## Use component name as style scope
 
-## Используйте ограниченные стили CSS
+Vue.js component elements are custom elements which can very well be used as style scope root.
+Alternatively the component name can be used as CSS class namespace.
 
-В Vue тег компонента является кастомным HTML-тегом, который может использоваться как корневой элемент CSS стилей (`vertical-slider .list-element`). Или имя компонента может быть использовано как префикс CSS класса всех стилей компонента (`.vertical-slider .list-element`).
+### Why?
 
-### Почему?
+* Scoping styles to a component element improves predictability as its prevents styles leaking outside the component element.
+* Using the same name for the module directory, the Vue.js component and the style root makes it easy for developers to understand they belong together.
 
-* Ограничивать CSS стили областью компонента делает поведение UI более предсказуемым, а также предохраняет переопределение стилей других элементов на странице из-за сходства селекторов (т.н. "утечку  стилей").
-* Использование одинакового имени для названия папки модуля, названия компонента и корневого CSS стиля, делает прозрачным для разработчиков, что это части одного целого.
+### How?
 
-### Как?
-
-Используйте имя компонента как неймспейс префикс используя методологии BEM и OOCSS и **важно** не пропускайте атрибут `scoped` на теге `<style>`.
-
-Использование этого атрибута оставит инструкцию для компилятора Vue добавить дополнительную сигнатуру на каждый класс, присутствующий в стилях вашего компонента. Это позволит при парсинге браузером (если он поддерживает такую возможность) применять ваши стили к тегам, которые составляют ваш компонент по всему приложению и только к ним, предотвращая т.н. "утечку стилей".
+Use the component name as a namespace prefix based on BEM and OOCSS **and** use the `scoped` attribute on your style class.
+The use of `scoped` will tell your Vue compiler to add a signature on every class that your `<style>` have. That signature will force your browser (if it supports) to apply your components
+CSS on all tags that compose your component, leading to a no leaking css styling.
 
 ```html
 <style scoped>
-  /* правильно */
+  /* recommended */
   .MyExample { }
   .MyExample li { }
   .MyExample__item { }
 
-  /* неправильно */
-  .My-Example { } /* не ограничен именем компонента или модуля, не соответствует спецификации BEM */
+  /* avoid */
+  .My-Example { } /* not scoped to component or module name, not BEM compliant */
 </style>
 ```
-[↑ наверх](#Содержание)
+
+[↑ back to Table of Contents](#table-of-contents)
 
 
+## Document your component API
 
-## Документируйте API компонента
+A Vue.js component instance is created by using the component element inside your application. The instance is configured through its custom attributes. For the component to be used by other developers, these custom attributes - the component's API - should be documented in a `README.md` file.
 
-Экземпляр Vue компонента создается при размещении элемента компонента в коде приложения. Дополнительная конфигурация экземпляра осуществляется при использовании атрибутов. Для того, чтобы компонент мог быть успешно переиспользован другими разработчиками, эти атрибуты и есть API вашего компонента. Они могут быть доходчиво описаны в сопроводительном файле `README.md`.
+### Why?
 
-### Почему?
+* Documentation provides developers with a high level overview to a component, without the need to go through all its code. This makes a component more accessible and easier to use.
+* A component's API is the set of custom attributes through which its configured. Therefore these are especially of interest to other developers which only want to consume (and not develop) the component.
+* Documentation formalises the API and tells developers which functionality to keep backwards compatible when modifying the component's code.
+* `README.md` is the de facto standard filename for documentation to be read first. Code repository hosting services (Github, Bitbucket, Gitlab etc) display the contents of the the README's, directly when browsing through source directories. This applies to our module directories as well.
 
-* Документация предлагает разработчику высокоуровневое описание компонента без необходимости вникать в его код. Это делает использование компонента более быстрым и простым.
-* API компонента в Vue это набор его атрибутов. Именно с их помощью он может быть дополнительно настроен. То есть именно атрибуты компонента являются важными для тех разработчиков, которые будут его в дальнейшем использовать.
-* Документация формализует API, показывает разработчикам какая часть функционала сохраняется для обратной совместимости при модификации кода компонента.
-* Название `README.md` это по факту отраслевой стандарт названия для документации, которую разработчику стоит прочесть прежде чем использовать проект. Многие платформы управления кодом (Github, Bitbucket, Gitlab) по умолчанию показывают содержание README-файла при просмотре контента любой директории.
+### How?
 
-### Как?
-
-Добавляйте `README.md` файл в папку с файлами одного компонента:
+Add a `README.md` file to the component's module directory:
 
 ```
 range-slider/
@@ -495,45 +505,67 @@ range-slider/
 └── README.md
 ```
 
-В этом README файле можно описать функционал модуля и варианты использования. Для компонентов Vue самым полезным является описать атрибуты, т.к. именно они являются выражением API компонента.
-
-[↑ наверх](#Содержание)
+Within the README file, describe the functionality and the usage of the module. For a vue component its most useful to describe the custom attributes it supports as those are its API:
 
 
+# Range slider
 
-## Добавляйте демо компонента
+## Functionality
 
-Добавьте `index.html` файл с демо вида компонента в разных конфигурациях показывая как компонент может быть использован.
+The range slider lets the user to set a numeric range by dragging a handle on a slider rail for both the start and end value.
 
-### Почему?
+This module uses the [noUiSlider](http://refreshless.com/nouislider/) for cross browser and touch support.
 
-* Наличие демо показывает, что модуль работает отдельно.
-* Демо помогает другим разработчикам посмотреть на результаты - что получится прежде чем разбираться с кодом и/или документацией.
-* Демо компонента исчерпывающе показывает различные варианты конфигурации его использования.
+## Usage
 
-[↑ наверх](#Содержание)
+`<range-slider>` supports the following custom component attributes:
+
+| attribute | type | description
+| --- | --- | ---
+| `min` | Number | number where range starts (lower limit).
+| `max` | Number | Number where range ends (upper limit).
+| `values` | Number[] *optional* | Array containing start and end value.  E.g. `values="[10, 20]"`. Defaults to `[opts.min, opts.max]`.
+| `step` | Number *optional* | Number to increment / decrement values by. Defaults to 1.
+| `on-slide` | Function *optional* | Function called with `(values, HANDLE)` while a user drags the start (`HANDLE == 0`) or end (`HANDLE == 1`) handle. E.g. `on-slide={ updateInputs }`, with `component.updateInputs = (values, HANDLE) => { const value = values[HANDLE]; }`.
+| `on-end` | Function *optional* | Function called with `(values, HANDLE)` when user stops dragging a handle.
+
+For customising the slider appearance see the [Styling section in the noUiSlider docs](http://refreshless.com/nouislider/more/#section-styling).
 
 
-## Форматируйте код ваших файлов
+[↑ back to Table of Contents](#table-of-contents)
 
-Линтеры улучшают качество кода и это помогает отлавливать синтаксические ошибки. `.vue` файлы можно обрабатывать плагином `eslint-plugin-html`. Если вы используете `vue-cli` то ESLint является доступной опцией по умолчанию.
 
-### Почему?
+## Add a component demo
 
-* Использование линтера гарантирует, что все разработчики читают и пишут код с одинаковыми правилами форматирования.
-* Использование линтера помогает обнаружить и избежать ошибок до того как код файла сохранен.
+Add a `index.html` file with demos of the component with different configurations, showing how the component can be used.
 
-### Как?
+### Why?
 
-Чтобы линтеры могли выделять Javascript код из ваших `vue` файлов, он должен быть внутри тега `<script></script>`. Также старайтесь сохранять инлайн-выражения простыми (см. выше) так как линтер не может их распарсить.
+* A component demo proves the component works in isolation.
+* A component demo gives developers a preview before having to dig into the documentation or code.
+* Demos can illustrate all the possible configurations and variations a component can be used in.
 
-Настройте линтер, указав ему, что определена глобальная переменная `vue` в секции `opts`.
+[↑ back to Table of Contents](#table-of-contents)
+
+
+## Lint your component files
+
+Linters improve code consistency and help trace syntax errors. .vue files can be linted adding the `eslint-plugin-html` in your project. If you choose, you can start a project with ESLint enabled by default using `vue-cli`;
+
+### Why?
+
+* Linting component files ensures all developers use the same code style.
+* Linting component files helps you trace syntax errors before it's too late.
+
+### How?
+
+To allow linters to extract the scripts from your `*.vue` files, [put script inside a `<script>` component](#use-script-inside-component) and [keep component expressions simple](#keep-component-expressions-simple) (as linters don't understand those). Configure your linter to allow global variables `vue` and component `props`.
 
 #### ESLint
 
-[ESLint](http://eslint.org/) для использования требуется [плагин ESLint HTML](https://github.com/BenoitZugmeyer/eslint-plugin-html#eslint-plugin-html) чтобы извлечь (распарсить) Javascript из `.vue` файлов компонентов.
+[ESLint](http://eslint.org/) requires an extra [ESLint HTML plugin](https://github.com/BenoitZugmeyer/eslint-plugin-html#eslint-plugin-html) to extract the script from the component files.
 
-Настройки ESLint сохраняем в файле `modules/.eslintrc` (так чтобы редактор кода также мог его интерпретировать):
+Configure ESLint in a `.eslintrc` file (so IDEs can interpret it as well):
 ```json
 {
   "extends": "eslint:recommended",
@@ -548,17 +580,16 @@ range-slider/
 }
 ```
 
-Запуск ESLint
+Run ESLint
 ```bash
-eslint modules/**/*.vue
+eslint src/**/*.vue
 ```
 
 #### JSHint
 
-[JSHint](http://jshint.com/) может парсить HTML (используя `--extra-ext`) и выделять код в script (используя `--extract=auto`).
+[JSHint](http://jshint.com/) can parse HTML (using `--extra-ext`) and extract script (using `--extract=auto`).
 
-Настройки JSHint сохраняем в файле `modules/.jshintrc` (так чтобы редактор кода также мог его интерпретировать):
-
+Configure JSHint in `.jshintrc` file (so IDEs can interpret it as well):
 ```json
 {
   "browser": true,
@@ -566,21 +597,85 @@ eslint modules/**/*.vue
 }
 ```
 
-Запуск JSHint
+Run JSHint
 ```bash
 jshint --config modules/.jshintrc --extra-ext=html --extract=auto modules/
 ```
-Внимание: JSHint не работает с `.vue`, только `.html`.
+Note: JSHint does not accept `vue` as extension, but only `html`.
+
+[↑ back to Table of Contents](#table-of-contents)
+
+
+## Create components when needed
+
+### Why?
+
+Vue.js is a component framework based. Not knowing when to create components can lead to issues like:
+
+* If the component is too big, it probably will be hard to (re)use and maintain;
+* If the component is too small, your project gets flooded, harder to make components communicate;
+
+### How?
+
+* Always remember to build your components for your project needs, but you should also try to think of them being able to work out of it. If they can work out of your project, such as a library, it makes them a lot more robust and consistent;
+* It's always better to build your components as early as possible since it allows you to build your communications (props & events) on existing and stable components.
+
+### Rules
+
+* First, try to build obvious components as early as possible such as: modal, popover, toolbar, menu, header, etc. Overall, components you know for sure you will need later on. On your current page or globally;
+* Secondly, on each new development, for a whole page or a portion of it, try to think before rushing in. If you know some parts of it should be a component, build it;
+* Lastly, if you're not sure, then don't! Avoid polluting your project with "possibly useful later" components, they might just stand there forever, empty of smartness. Note it's better to break it down as soon as you realize it should have been, to avoid the complexity of compatibility with the rest of the project;
+
+[↑ back to Table of Contents](#table-of-contents)
 
 ---
 
-## Хотите поучаствовать?
+## Wanna help?
 
-Сделайте форк этого репозитория и далее предлагайте PR. Или просто создайте [тикет](https://github.com/pablohpsilva/vuejs-component-style-guide/issues/new).
+Fork it and Pull Request what you think it should be good to have or just create an [Issue](https://github.com/pablohpsilva/vuejs-component-style-guide/issues/new).
 
-## Автор перевода
 
-Mikhail Kuznetcov
+<!-- ## Add badge to your project
 
-- Github [shershen08](https://github.com/shershen08)
-- Twitter [@legkoletat](https://twitter.com/legkoletat)
+You can use the *Vue.js Style Guide badge* to link to this guide:
+
+[![Vue.js Style Guide badge](https://cdn.rawgit.com/voorhoede/Vue.js-style-guide/master/Vue.js-style-guide.svg)](https://github.com/voorhoede/Vue.js-style-guide)
+
+### Why?
+
+Inform other developers your project is following the Vue.js Style Guide. And let them know where they can find this guide.
+
+### How?
+
+Include the badge in your project. In markdown:
+
+```markdown
+[![Vue.js Style Guide badge](https://cdn.rawgit.com/voorhoede/Vue.js-style-guide/master/Vue.js-style-guide.svg)](https://github.com/voorhoede/Vue.js-style-guide)
+```
+
+Or html:
+
+```html
+<a href="https://github.com/voorhoede/Vue.js-style-guide">
+    <img alt="Vue.js Style Guide badge"
+       src="https://cdn.rawgit.com/voorhoede/Vue.js-style-guide/master/Vue.js-style-guide.svg">
+</a>
+```
+
+[↑ back to Table of Contents](#table-of-contents)
+
+---
+
+## License
+
+[![CC0](http://mirrors.creativecommons.org/presskit/buttons/88x31/svg/cc-zero.svg)](https://creativecommons.org/publicdomain/zero/1.0/)
+
+[De Voorhoede](https://twitter.com/devoorhoede) waives all rights to this work worldwide under copyright law, including all related and neighboring rights, to the extent allowed by law.
+
+You can copy, modify, distribute and perform the work, even for commercial purposes, all without asking permission.
+ -->
+
+
+## Translation authors
+
+* [Russian](https://pablohpsilva.github.io/vuejs-component-style-guide/#/russian): Mikhail Kuznetcov [github:shershen08](https://github.com/shershen08), [twitter: @legkoletat](https://twitter.com/legkoletat)
