@@ -1,10 +1,10 @@
-# Vue.js Component Style Guide
+# Руководство по использованию компонентов Vue.js
 
 <p align="center">
   <img src="https://raw.githubusercontent.com/pablohpsilva/vuejs-component-style-guide/master/img/logo.png"/>
 </p>
 
-### Переводы
+### Переводы на другие языки
 * [English](https://pablohpsilva.github.io/vuejs-component-style-guide/#/)
 * [Brazilian Portuguese](https://pablohpsilva.github.io/vuejs-component-style-guide/#/portuguese)
 * [Chinese](https://pablohpsilva.github.io/vuejs-component-style-guide/#/chinese)
@@ -20,12 +20,12 @@ This guide provides a uniform way to structure your [Vue.js](http://vuejs.org/) 
 * easier to (re)use build tools you already use.
 * easier to cache and serve bundles of code separately.
 
-This guide is inspired by the [RiotJS Style Guide](https://github.com/voorhoede/riotjs-style-guide) by [De Voorhoede](https://github.com/voorhoede).
+Создание этого руководства вдохновлялось [руководством RiotJS](https://github.com/voorhoede/riotjs-style-guide) написанное [De Voorhoede](https://github.com/voorhoede).
 
 ## Содержание
 
-* [Module based development](#module-based-development)
-* [vue component names](#vue-component-names)
+* [Разработка на основе модулей](#разработка-на-основе-модулей)
+* [Именование компонентов Vue](#именование-компонентов-vue)
 * [Keep component expressions simple](#keep-component-expressions-simple)
 * [Keep component props primitive](#keep-component-props-primitive)
 * [Harness your component props](#harness-your-component-props)
@@ -43,55 +43,55 @@ This guide is inspired by the [RiotJS Style Guide](https://github.com/voorhoede/
 <!-- * [Add badge to your project](#add-badge-to-your-project) -->
 
 
-## Module based development
+## Разработка на основе модулей
 
-Always construct your app out of small modules which do one thing and do it well.
+Всегда конструируйте своё приложение из небольших модулей, где каждый делает одну вещь и делает её хорошо.
 
-A module is a small self-contained part of an application. The Vue.js library is specifically designed to help you create *view-logic modules*.
+Модуль — это маленькая самостоятельная часть приложения. Vue.js специально разработан, чтобы помочь вам создавать *модули, связывающие логику с отображением*.
 
 ### Почему?
 
-Small modules are easier to learn, understand, maintain, reuse and debug. Both by you and other developers.
+Маленькие модули проще изучать, понимать, поддерживать, переиспользовать и отлаживать. Не только вам, но и другим разработчикам.
 
 ### Каким образом?
 
-Each Vue component (like any module) must be [FIRST](https://addyosmani.com/first/): *Focused* ([single responsibility](http://en.wikipedia.org/wiki/Single_responsibility_principle)), *Independent*, *Reusable*, *Small* and *Testable*.
+Каждый компонент Vue component (как и любой другой модуль) должны подчиняться принципам  [FIRST](https://addyosmani.com/first/): *Сфокусированный (Focused)* ([принцип единственной ответственности](https://ru.wikipedia.org/wiki/Принцип_единственной_ответственности)), *Независимый (Independent)*, *Переиспользуемый (Reusable)*, *Маленький (Small)* и *Тестируемый (Testable)*.
 
-If your component does too much or gets too big, split it up into smaller components which each do just one thing. As a rule of thumb, try to keep each component file less than 100 lines of code.
-Also ensure your Vue component works in isolation. For instance by adding a stand-alone demo.
+Если ваш компонент делает слишком многое или становится слишком большим, разделяйте его на меньшие компоненты, где каждый будет делать только одну вещь. Как правило, старайтесь поддерживать файлы компонентов в размерах не более чем 100 строк кода.
+Также убедитесь, что компонент Vue работает изолированно. Например, добавив отдельную демо-версию его работы.
 
 [↑ наверх к содержанию](#table-of-contents)
 
 
-## Vue Component Names
+## Именование компонентов Vue
 
-Each component name must be:
+Каждое название компонента должно быть:
 
-* **Meaningful**: not over specific, not overly abstract.
-* **Short**: 2 or 3 words.
-* **Pronounceable**: we want to be able talk about them.
+* **Значимым**: не очень специфичным и не очень абстрактным.
+* **Коротким**: 2 или 3 слова.
+* **Произносимым**: мы должны иметь возможность поговорить о них.
 
-Vue component names must also be:
+Имена компонентов Vue также должны:
 
-* **Custom element spec compliant**: [include a hyphen](https://www.w3.org/TR/custom-elements/#concepts), don't use reserved names.
-* **`app-` namespaced**: if very generic and otherwise 1 word, so that it can easily be reused in other projects.
+* **Соответствовать спецификации пользовательских элементов**: [содержать дефис](https://www.w3.org/TR/custom-elements/#concepts), не использовать зарезервированные имена.
+* **Содержать префикс принадлежности к приложению**: если название очень общее или содержит 1 слово, чтобы его можно было переиспользовать в других проектах.
 
 ### Почему?
 
-* The name is used to communicate about the component. So it must be short, meaningful and pronounceable.
+* Имя используется в обсуждениях о компоненте. Поэтому оно должно быть коротким, значимым и произносимым.
 
 ### Каким образом?
 
 ```html
-<!-- recommended -->
+<!-- рекомендуется -->
 <app-header></app-header>
 <user-list></user-list>
 <range-slider></range-slider>
 
-<!-- avoid -->
-<btn-group></btn-group> <!-- short, but unpronounceable. use `button-group` instead -->
-<ui-slider></ui-slider> <!-- all components are ui elements, so is meaningless -->
-<slider></slider> <!-- not custom element spec compliant -->
+<!-- следует избегать -->
+<btn-group></btn-group> <!-- Коротко, но непроизносимо. Лучше назвать `button-group`  -->
+<ui-slider></ui-slider> <!-- все компоненты и так UI-элементы, поэтому это бесмысленно -->
+<slider></slider> <!-- не соответствует спецификации пользовательских элементов -->
 ```
 
 [↑ наверх к содержанию](#table-of-contents)
